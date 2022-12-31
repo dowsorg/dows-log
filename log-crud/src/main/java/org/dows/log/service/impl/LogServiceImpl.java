@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.dows.framework.crud.mybatis.MybatisCrudServiceImpl;
 import org.dows.framework.crud.mybatis.utils.QueryWrapperUtils;
-import org.dows.log.api.annotation.Log;
+import org.dows.log.api.annotation.AuditLog;
 import org.dows.log.api.dto.LogQueryParam;
 import org.dows.log.api.dto.LogSmallDTO;
 import org.dows.log.api.util.FileUtil;
@@ -85,7 +85,7 @@ public class LogServiceImpl extends MybatisCrudServiceImpl<LogMapper, SysLog> im
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        Log aopLog = method.getAnnotation(Log.class);
+        AuditLog aopAuditLog = method.getAnnotation(AuditLog.class);
 
         // 方法路径
         String methodName = joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()";
@@ -99,7 +99,7 @@ public class LogServiceImpl extends MybatisCrudServiceImpl<LogMapper, SysLog> im
         }
         // 描述
         if (log != null) {
-            log.setDescr(aopLog.value());
+            log.setDescr(aopAuditLog.value());
         }
         assert log != null;
         log.setRequestIp(ip);

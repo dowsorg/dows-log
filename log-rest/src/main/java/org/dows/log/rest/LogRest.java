@@ -6,7 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.dows.framework.api.Response;
-import org.dows.log.api.annotation.Log;
+import org.dows.log.api.annotation.AuditLog;
 import org.dows.log.api.dto.LogQueryParam;
 import org.dows.log.api.dto.LogSmallDTO;
 import org.dows.log.service.LogService;
@@ -30,7 +30,7 @@ public class LogRest {
 
     private final LogService logService;
 
-    @Log("导出数据")
+    @AuditLog("导出数据")
     @ApiOperation("导出数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check()")
@@ -39,7 +39,7 @@ public class LogRest {
         logService.download(logService.queryAll(criteria), response);
     }
 
-    @Log("导出错误数据")
+    @AuditLog("导出错误数据")
     @ApiOperation("导出错误数据")
     @GetMapping(value = "/error/download")
     @PreAuthorize("@el.check()")
@@ -80,7 +80,7 @@ public class LogRest {
     }
 
     @DeleteMapping(value = "/del/error")
-    @Log("删除所有ERROR日志")
+    @AuditLog("删除所有ERROR日志")
     @ApiOperation("删除所有ERROR日志")
     @PreAuthorize("@el.check()")
     public Response<Integer> delAllErrorLog() {
@@ -88,7 +88,7 @@ public class LogRest {
     }
 
     @DeleteMapping(value = "/del/info")
-    @Log("删除所有INFO日志")
+    @AuditLog("删除所有INFO日志")
     @ApiOperation("删除所有INFO日志")
     @PreAuthorize("@el.check()")
     public Response<Integer> delAllInfoLog() {
