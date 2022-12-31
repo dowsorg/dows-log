@@ -18,6 +18,7 @@
         <module>log-crud</module>
         <module>log-rest</module>
         <module>log-config</module>
+        <module>log-core</module>
     </modules>
 
 </project>
