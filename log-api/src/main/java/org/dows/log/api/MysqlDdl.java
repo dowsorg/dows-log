@@ -38,11 +38,10 @@ import java.util.List;
  * }
  */
 @Data
-public class Database {
+public class MysqlDdl {
 
     private String name;
     private List<Table> tables;
-
 
     @Data
     public static class Table {
