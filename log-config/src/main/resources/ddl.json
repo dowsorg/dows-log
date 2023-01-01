@@ -1,0 +1,31 @@
+{
+  "database": {
+    "name": "test",
+    "tables": [
+      {
+        "table": {
+          "name": "",
+          "comment": "",
+          "columns": [
+            {
+              "name": "",
+              "type": "",
+              "length": "",
+              "defaultValue": "",
+              "comment": "",
+              "unique": false,
+              "index": {
+                "flag": false,
+                "seq": 1
+              },
+              "pk": {
+                "flag": false,
+                "strategy": "auto_inc"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

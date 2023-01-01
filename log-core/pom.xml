@@ -10,6 +10,17 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>org.dows.saas</groupId>
+            <artifactId>log-api</artifactId>
+            <version>20220701-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dows.saas</groupId>
+            <artifactId>dows-config</artifactId>
+            <version>20220701-SNAPSHOT</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.github.shyiko</groupId>
@@ -26,18 +37,7 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.dows.saas</groupId>
-            <artifactId>log-api</artifactId>
-            <version>20220701-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.dows.saas</groupId>
-            <artifactId>dows-config</artifactId>
-            <version>20220701-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+
 
     </dependencies>
 </project>

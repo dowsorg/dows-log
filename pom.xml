@@ -19,6 +19,7 @@
         <module>log-rest</module>
         <module>log-config</module>
         <module>log-core</module>
+        <module>log-app</module>
     </modules>
 
 </project>
