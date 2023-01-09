@@ -13,7 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @Date: 2023\1\6 0006 15:59
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"org.dows.demo"})
 @MapperScan(basePackages = {"org.dows.**.mapper"})
 //@EntityScan(basePackageClasses = {UserEntity.class, UserEntityLog.class})
 public class Application {
