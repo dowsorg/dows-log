@@ -1,0 +1,36 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        new_generator_mappings: false
+        format_sql: true
+    database: mysql
+    show-sql: true
+    #当写的实体类中属性，如果对应表没有该属性的字段，会自动创建一个该属性的字段，规则是属性中大写字母处变成_小写字母的字段，比如userName变成user_name
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.1.147:3306/log_ddl_demo?useUnicode=true&characterEncoding=UTF-8
+
+log:
+  binlog:
+    hosts:
+      name: log_ddl_demo
+      host: 192.168.1.147
+      port: 3306
+      username: root
+      password: 123456
+      timeOffset: 1000
+
+#mybatis-plus:
+#  scanner:
+#    base:
+#      package:
+
+server:
+  servlet:
+    context-path: /dows-log

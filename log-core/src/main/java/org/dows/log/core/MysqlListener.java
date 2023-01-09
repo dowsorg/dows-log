@@ -25,7 +25,13 @@ public class MysqlListener {
 
         hostName = annotation.hostName();
         database = annotation.database();
-        table = annotation.table();
+        Class aClass = annotation.tableSchemaClass();
+//        try {
+//            aClass.getField("Table").getAnnotations();
+//            table = aClass.getAnnotation("c").toString();
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        }
         entityClass = getGenericClass(targetClass);
     }
 
@@ -55,7 +61,7 @@ public class MysqlListener {
 
         Type[] types = targetClass.getGenericInterfaces();
         if (types.length == 0) {
-            types = new Type[] {targetClass.getGenericSuperclass()};
+            types = new Type[]{targetClass.getGenericSuperclass()};
         }
 
         for (Type type : types) {

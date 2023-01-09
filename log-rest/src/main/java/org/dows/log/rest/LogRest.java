@@ -30,7 +30,7 @@ public class LogRest {
 
     private final LogService logService;
 
-    @AuditLog("导出数据")
+//    @AuditLog("导出数据")
     @ApiOperation("导出数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check()")
@@ -39,7 +39,7 @@ public class LogRest {
         logService.download(logService.queryAll(criteria), response);
     }
 
-    @AuditLog("导出错误数据")
+//    @AuditLog("导出错误数据")
     @ApiOperation("导出错误数据")
     @GetMapping(value = "/error/download")
     @PreAuthorize("@el.check()")
@@ -80,7 +80,7 @@ public class LogRest {
     }
 
     @DeleteMapping(value = "/del/error")
-    @AuditLog("删除所有ERROR日志")
+//    @AuditLog("删除所有ERROR日志")
     @ApiOperation("删除所有ERROR日志")
     @PreAuthorize("@el.check()")
     public Response<Integer> delAllErrorLog() {
@@ -88,7 +88,7 @@ public class LogRest {
     }
 
     @DeleteMapping(value = "/del/info")
-    @AuditLog("删除所有INFO日志")
+//    @AuditLog("删除所有INFO日志")
     @ApiOperation("删除所有INFO日志")
     @PreAuthorize("@el.check()")
     public Response<Integer> delAllInfoLog() {

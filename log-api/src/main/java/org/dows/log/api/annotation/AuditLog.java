@@ -23,4 +23,6 @@ public @interface AuditLog {
     boolean enable() default true;
 
     LogActionType type() default LogActionType.SELECT;
+
+    Class tableSchemaClass();
 }
