@@ -1,7 +1,7 @@
 package org.dows.demo.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.dows.demo.eitity.UserEntity;
+import org.dows.demo.entity.UserEntity;
 import org.dows.framework.crud.mybatis.MybatisCrudMapper;
 
 /**

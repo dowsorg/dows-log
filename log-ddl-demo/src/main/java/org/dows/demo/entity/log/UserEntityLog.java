@@ -1,8 +1,9 @@
-package org.dows.demo.log;
+package org.dows.demo.entity.log;
 
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.dows.demo.eitity.UserEntity;
+import org.dows.demo.entity.UserEntity;
 import org.dows.log.api.annotation.Binlog;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @Binlog(hostName = "192.168.1.147", database = "log_ddl_demo", tableSchemaClass = UserEntity.class)
-public class UserEntityLog {
+public class UserEntityLog extends Model<UserEntityLog> {
 
     @Id
     @Column(nullable = false, columnDefinition = "int(38) comment '主键id'")

@@ -33,14 +33,15 @@ public class DomainScanner extends ClassPathBeanDefinitionScanner {
             } catch (ClassNotFoundException e) {
                 throw new IllegalArgumentException(beanClassName);
             }
-            DynamicMapperCreator dynamicMapperCreator = new DynamicMapperCreator();
-            Class<?> mapperClazz = dynamicMapperCreator.getOrCreateMapperClazz(entityClazz);
-            beanDefinition.setBeanClass(MapperFactoryBean.class);
-            ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
-            constructorArgumentValues.addIndexedArgumentValue(0, mapperClazz);
-            beanDefinition.setConstructorArgumentValues(constructorArgumentValues);
-            beanDefinition.getPropertyValues().add("sqlSessionFactory",
-                    new RuntimeBeanReference("sqlSessionFactory"));
+
+//            DynamicMapperCreator dynamicMapperCreator = new DynamicMapperCreator();
+//            Class<?> mapperClazz = dynamicMapperCreator.getOrCreateMapperClazz(entityClazz);
+//            beanDefinition.setBeanClass(MapperFactoryBean.class);
+//            ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
+//            constructorArgumentValues.addIndexedArgumentValue(0, mapperClazz);
+//            beanDefinition.setConstructorArgumentValues(constructorArgumentValues);
+//            beanDefinition.getPropertyValues().add("sqlSessionFactory",
+//                    new RuntimeBeanReference("sqlSessionFactory"));
         }
 
         return beanDefinitionHolders;

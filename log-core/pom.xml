@@ -21,7 +21,11 @@
             <version>20220701-SNAPSHOT</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.dows.framework</groupId>
+            <artifactId>crud-mybatis</artifactId>
+            <version>20220701-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.github.shyiko</groupId>
             <artifactId>mysql-binlog-connector-java</artifactId>

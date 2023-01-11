@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Component
 public class BinlogBeanProcessor implements SmartInitializingSingleton {
     private ApplicationContext context;
-
     @Autowired
     private LogConfig logConfig;
 

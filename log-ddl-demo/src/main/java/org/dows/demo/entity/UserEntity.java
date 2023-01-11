@@ -1,4 +1,4 @@
-package org.dows.demo.eitity;
+package org.dows.demo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

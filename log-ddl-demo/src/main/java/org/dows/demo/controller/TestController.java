@@ -1,9 +1,9 @@
 package org.dows.demo.controller;
 
-import org.dows.demo.eitity.UserEntity;
-import org.dows.demo.log.UserEntityLog;
-import org.dows.demo.mapper.UserEntityMapper;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import org.dows.demo.entity.log.UserEntityLog;
 import org.dows.demo.request.AddRequest;
+import org.dows.demo.service.UserServiceImpl;
 import org.dows.log.api.annotation.AuditLog;
 import org.dows.log.api.annotation.type.LogActionType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,16 +23,28 @@ import java.util.Map;
  */
 @RestController
 public class TestController {
-
     @Autowired
-    private UserEntityMapper mapper;
+    private UserServiceImpl userService;
 
-    @AuditLog(type = LogActionType.ADD, tableSchemaClass = UserEntityLog.class)
     @PostMapping(value = "/testAuditLog")
-    public ResponseEntity<Object> testAuditLog(@RequestBody AddRequest addRequest) {
+    public <T extends Model> ResponseEntity<Object> testAuditLog(@RequestBody AddRequest addRequest) {
+        userService.insert(addRequest.getStr1(), addRequest.getStr2());
+        return new ResponseEntity<>(Collections.EMPTY_MAP, HttpStatus.OK);
+    }
+
+    @AuditLog(type = LogActionType.DELETE, tableSchemaClass = UserEntityLog.class)
+    @PostMapping(value = "/testAuditLogDelete")
+    public ResponseEntity<Object> testAuditLogDelete(@RequestBody AddRequest addRequest) {
         Map<String, String> result = new HashMap<>(1);
-        mapper.insert(new UserEntity(11111, "dd"));
+        userService.delete(11111);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @AuditLog(type = LogActionType.SELECT, tableSchemaClass = UserEntityLog.class)
+    @PostMapping(value = "/testAuditLogSelect")
+    public ResponseEntity<Object> testAuditLogSelect(@RequestBody AddRequest addRequest) {
+        Map<String, String> result = new HashMap<>(1);
+        userService.delete(111);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
