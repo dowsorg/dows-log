@@ -85,6 +85,10 @@ public class LogService {
     public int insertByMap(Map<String, String> data) {
         SaveWrapper wrapper = new SaveWrapper();
         wrapper.setMap(data);
+
+        // 查询table 是否有通用字段
+
+
         return insert(wrapper);
     }
 

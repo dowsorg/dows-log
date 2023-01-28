@@ -17,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>org.dows.saas</groupId>
-            <artifactId>dows-config</artifactId>
+            <artifactId>log-config</artifactId>
             <version>20220701-SNAPSHOT</version>
         </dependency>
 
