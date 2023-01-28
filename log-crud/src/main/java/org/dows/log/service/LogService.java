@@ -1,11 +1,14 @@
 package org.dows.log.service;
 
-import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import lombok.RequiredArgsConstructor;
+import org.dows.log.DomainContextHolder;
+import org.dows.log.DomainMeta;
 import org.dows.log.SaveWrapper;
 import org.dows.log.mapper.LogMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,8 @@ import java.util.Map;
 /**
  * 动态服务
  */
+@Service
+@RequiredArgsConstructor
 public class LogService {
 
     /**
@@ -21,23 +26,22 @@ public class LogService {
     private final LogMapper logMapper;
 
     /**
-     * 表名
-     */
-    private final String table;
-
-    public LogService(String table) {
-        this.table = table;
-        this.logMapper = SpringUtil.getBean(LogMapper.class);
-    }
-
-    /**
      * 根据id查询
      *
      * @param id
      * @return
      */
-    public Object selectById(Integer id) {
+    public Object selectById(String table, Long id) {
         return logMapper.selectById(table, id);
+    }
+
+    public void selectByIds(String domain, String ids) {
+        // 获取domain对应的table
+        DomainMeta domainMeta = DomainContextHolder.get(domain);
+        if (ids.isBlank()) {
+            String join = "`" + String.join("`,`", ids.split(",")) + "`";
+            logMapper.selectByIds(domainMeta.getTableName(), join);
+        }
     }
 
     /**
@@ -46,7 +50,7 @@ public class LogService {
      * @param wrapper
      * @return
      */
-    public List<JSONObject> selectList(QueryWrapper wrapper) {
+    public List<JSONObject> selectList(String table, QueryWrapper wrapper) {
         return logMapper.selectList(table, wrapper);
     }
 
@@ -56,14 +60,14 @@ public class LogService {
      * @param data
      * @return
      */
-    public List<JSONObject> selectListByMap(Map<String, String> data) {
+    public List<JSONObject> selectListByMap(String table, Map<String, String> data) {
         QueryWrapper queryWrapper = new QueryWrapper();
         for (String key : data.keySet()) {
             if (data.get(key) != null && !data.get(key).equals("")) {
                 queryWrapper.eq(key, data.get(key));
             }
         }
-        return selectList(queryWrapper);
+        return selectList(table, queryWrapper);
     }
 
     /**
@@ -72,7 +76,7 @@ public class LogService {
      * @param wrapper
      * @return
      */
-    public int insert(SaveWrapper wrapper) {
+    public int insert(String table, SaveWrapper wrapper) {
         return logMapper.insert(table, wrapper);
     }
 
@@ -82,14 +86,14 @@ public class LogService {
      * @param data
      * @return
      */
-    public int insertByMap(Map<String, String> data) {
+    public int insertByMap(String table, Map<String, String> data) {
         SaveWrapper wrapper = new SaveWrapper();
         wrapper.setMap(data);
 
         // 查询table 是否有通用字段
 
 
-        return insert(wrapper);
+        return insert(table, wrapper);
     }
 
     /**
@@ -98,7 +102,7 @@ public class LogService {
      * @param wrapper
      * @return
      */
-    public int updateCondition(UpdateWrapper wrapper) {
+    public int updateCondition(String table, UpdateWrapper wrapper) {
         return logMapper.update(table, wrapper);
     }
 
@@ -108,7 +112,7 @@ public class LogService {
      * @param data
      * @return
      */
-    public int updateByMap(Map<String, String> data) {
+    public int updateByMap(String table, Map<String, String> data) {
         UpdateWrapper updateWrapper = new UpdateWrapper();
         if (data.containsKey("id")) {
             updateWrapper.eq("id", data.get("id"));
@@ -120,7 +124,7 @@ public class LogService {
                 updateWrapper.set(key, data.get(key));
             }
         }
-        return updateCondition(updateWrapper);
+        return updateCondition(table, updateWrapper);
     }
 
     /**
@@ -129,7 +133,7 @@ public class LogService {
      * @param ids
      * @return
      */
-    public int deleteByIds(Integer[] ids) {
+    public int deleteByIds(String table, Integer[] ids) {
         return logMapper.deleteByIds(table, ids);
     }
 
@@ -139,7 +143,9 @@ public class LogService {
      * @param id
      * @return
      */
-    public int deleteById(Integer id) {
+    public int deleteById(String table, Integer id) {
         return logMapper.deleteById(table, id);
     }
+
+
 }

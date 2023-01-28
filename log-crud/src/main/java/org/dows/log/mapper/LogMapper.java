@@ -16,8 +16,18 @@ public interface LogMapper extends BaseMapper<Object> {
      * @param id 主键
      * @return 测试
      */
-    @Select("select * from ${table} where id = #{id}")
-    JSONObject selectById(@Param("table") String table, @Param("id") Integer id);
+    @Select("select * from ${table} where id = `#{id}`")
+    JSONObject selectById(@Param("table") String table, @Param("id") Long id);
+
+    @Select("select * from ${table} where id in (${ids})")
+    JSONObject selectByIds(@Param("table") String table, @Param("id") String ids);
+
+    @Select("select * from ${table} where domainId = #{domainId}")
+    JSONObject selectByDomainId(@Param("table") String table, @Param("domainId") String domainId);
+
+    @Select("select * from ${table} where domainId in (${domainIds})")
+    JSONObject selectByDomainIds(@Param("table") String table, @Param("domainIds") String domainIds);
+
 
     /**
      * 查询列表
