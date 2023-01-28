@@ -1,91 +1,141 @@
-//package org.dows.log.service;
-//
-//import com.baomidou.mybatisplus.core.metadata.IPage;
-//import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-//import org.dows.framework.crud.mybatis.MybatisCrudService;
-//import org.dows.log.api.dto.LogQueryParam;
-//import org.dows.log.api.dto.LogSmallDTO;
-//import org.dows.log.entity.SysLog;
-//import org.aspectj.lang.ProceedingJoinPoint;
-//import org.springframework.scheduling.annotation.Async;
-//
-//import javax.servlet.http.HttpServletResponse;
-//import java.io.IOException;
-//import java.util.List;
-//
-///**
-// *
-// */
-//public interface LogService extends MybatisCrudService<SysLog> {
-//
-//    static final String CACHE_KEY = "log";
-//
-//    /**
-//     * 查询数据分页
-//     *
-//     * @param query    条件
-//     * @param pageable 分页参数
-//     * @return PageInfo<Log>
-//     */
-//    IPage queryAll(LogQueryParam query, Page pageable);
-//
-//    /**
-//     * 查询所有数据不分页
-//     *
-//     * @param query 条件参数
-//     * @return List<Log>
-//     */
-//    List<SysLog> queryAll(LogQueryParam query);
-//
-//    SysLog findById(Long id);
-//
-//    /**
-//     * 查询用户日志
-//     *
-//     * @param criteria 查询条件
-//     * @param pageable 分页参数
-//     * @return -
-//     */
-//    IPage<LogSmallDTO> queryAllByUser(LogQueryParam criteria, Page pageable);
-//
-//    /**
-//     * 保存日志数据
-//     *
-//     * @param username  用户
-//     * @param browser   浏览器
-//     * @param ip        请求IP
-//     * @param joinPoint /
-//     * @param log       日志实体
-//     */
-//    @Async
-//    void save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, SysLog log);
-//
-//    /**
-//     * 查询异常详情
-//     *
-//     * @param id 日志ID
-//     * @return Object
-//     */
-//    Object findByErrDetail(Long id);
-//
-//    /**
-//     * 导出日志
-//     *
-//     * @param logs     待导出的数据
-//     * @param response /
-//     * @throws IOException /
-//     */
-//    void download(List<SysLog> logs, HttpServletResponse response) throws IOException;
-//
-//    boolean removeByLogType(String logType);
-//
-//    /**
-//     * 删除所有错误日志
-//     */
-//    boolean delAllByError();
-//
-//    /**
-//     * 删除所有INFO日志
-//     */
-//    boolean delAllByInfo();
-//}
+package org.dows.log.service;
+
+import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.json.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import org.dows.log.SaveWrapper;
+import org.dows.log.mapper.LogMapper;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 动态服务
+ */
+public class LogService {
+
+    /**
+     * 动态mapper
+     */
+    private final LogMapper logMapper;
+
+    /**
+     * 表名
+     */
+    private final String table;
+
+    public LogService(String table) {
+        this.table = table;
+        this.logMapper = SpringUtil.getBean(LogMapper.class);
+    }
+
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return
+     */
+    public Object selectById(Integer id) {
+        return logMapper.selectById(table, id);
+    }
+
+    /**
+     * 查询列表
+     *
+     * @param wrapper
+     * @return
+     */
+    public List<JSONObject> selectList(QueryWrapper wrapper) {
+        return logMapper.selectList(table, wrapper);
+    }
+
+    /**
+     * 根据Map查询列表
+     *
+     * @param data
+     * @return
+     */
+    public List<JSONObject> selectListByMap(Map<String, String> data) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        for (String key : data.keySet()) {
+            if (data.get(key) != null && !data.get(key).equals("")) {
+                queryWrapper.eq(key, data.get(key));
+            }
+        }
+        return selectList(queryWrapper);
+    }
+
+    /**
+     * 插入
+     *
+     * @param wrapper
+     * @return
+     */
+    public int insert(SaveWrapper wrapper) {
+        return logMapper.insert(table, wrapper);
+    }
+
+    /**
+     * 根据Map插入
+     *
+     * @param data
+     * @return
+     */
+    public int insertByMap(Map<String, String> data) {
+        SaveWrapper wrapper = new SaveWrapper();
+        wrapper.setMap(data);
+        return insert(wrapper);
+    }
+
+    /**
+     * 修改
+     *
+     * @param wrapper
+     * @return
+     */
+    public int updateCondition(UpdateWrapper wrapper) {
+        return logMapper.update(table, wrapper);
+    }
+
+    /**
+     * 根据Map修改
+     *
+     * @param data
+     * @return
+     */
+    public int updateByMap(Map<String, String> data) {
+        UpdateWrapper updateWrapper = new UpdateWrapper();
+        if (data.containsKey("id")) {
+            updateWrapper.eq("id", data.get("id"));
+        } else {
+            throw new RuntimeException("不能没有id字段");
+        }
+        for (String key : data.keySet()) {
+            if (data.get(key) != null && !data.get(key).equals("") && !"id".equals(data.get(key))) {
+                updateWrapper.set(key, data.get(key));
+            }
+        }
+        return updateCondition(updateWrapper);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     * @return
+     */
+    public int deleteByIds(Integer[] ids) {
+        return logMapper.deleteByIds(table, ids);
+    }
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     */
+    public int deleteById(Integer id) {
+        return logMapper.deleteById(table, id);
+    }
+}
