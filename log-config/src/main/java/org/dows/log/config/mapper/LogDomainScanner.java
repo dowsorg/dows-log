@@ -1,4 +1,4 @@
-package org.dows.log.boot;
+package org.dows.log.config.mapper;
 
 import cn.hutool.extra.spring.SpringUtil;
 import lombok.SneakyThrows;
@@ -35,9 +35,9 @@ public class LogDomainScanner extends ClassPathBeanDefinitionScanner {
     protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
         Set<BeanDefinitionHolder> beanDefinitionHolders = super.doScan(basePackages);
         for (BeanDefinitionHolder beanDefinitionHolder : beanDefinitionHolders) {
-            Class beanClass = Class.forName(beanDefinitionHolder.getBeanDefinition().getBeanClassName());
-//            ScannedGenericBeanDefinition beanDefinition = (ScannedGenericBeanDefinition) beanDefinitionHolder.getBeanDefinition();
-//            Class beanClass = beanDefinition.getBeanClass();
+
+            ScannedGenericBeanDefinition beanDefinition = (ScannedGenericBeanDefinition) beanDefinitionHolder.getBeanDefinition();
+            Class beanClass = beanDefinition.getBeanClass();
             Binlog annotation = AnnotationUtils.findAnnotation(beanClass, Binlog.class);
             if(annotation!= null){
                 LogContext.put(beanClass);

@@ -1,7 +1,7 @@
 package org.dows.log.core.thread;
 
 import com.github.shyiko.mysql.binlog.BinaryLogClient;
-import org.dows.log.LogProperties;
+import org.dows.log.config.LogProperties;
 import org.dows.log.core.BinlogDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

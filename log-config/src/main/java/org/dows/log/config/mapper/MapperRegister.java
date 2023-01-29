@@ -1,4 +1,4 @@
-package org.dows.log.boot;
+package org.dows.log.config.mapper;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

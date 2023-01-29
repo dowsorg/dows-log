@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  org.dows.log.boot.LogConfig
+  org.dows.log.boot.LogAutoConfiguration

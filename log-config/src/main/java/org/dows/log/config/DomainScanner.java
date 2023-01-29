@@ -1,9 +1,7 @@
-package org.dows.log.boot;
+package org.dows.log.config;
 
-import org.mybatis.spring.mapper.MapperFactoryBean;
+import org.dows.log.api.DomainContextHolder;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
-import org.springframework.beans.factory.config.ConstructorArgumentValues;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.context.annotation.ScannedGenericBeanDefinition;
@@ -24,24 +22,21 @@ public class DomainScanner extends ClassPathBeanDefinitionScanner {
     @Override
     protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
         Set<BeanDefinitionHolder> beanDefinitionHolders = super.doScan(basePackages);
+
         for (BeanDefinitionHolder beanDefinitionHolder : beanDefinitionHolders) {
             ScannedGenericBeanDefinition beanDefinition = (ScannedGenericBeanDefinition) beanDefinitionHolder.getBeanDefinition();
-            String beanClassName = beanDefinition.getBeanClassName();
-            Class<?> entityClazz = null;
-            try {
-                entityClazz = Class.forName(beanClassName);
-            } catch (ClassNotFoundException e) {
-                throw new IllegalArgumentException(beanClassName);
-            }
-
+            Class<?> beanClass = beanDefinition.getBeanClass();
+            DomainContextHolder.put(beanClass);
+            /**
+             * 动态创建mapper
+             */
 //            DynamicMapperCreator dynamicMapperCreator = new DynamicMapperCreator();
 //            Class<?> mapperClazz = dynamicMapperCreator.getOrCreateMapperClazz(entityClazz);
 //            beanDefinition.setBeanClass(MapperFactoryBean.class);
 //            ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
 //            constructorArgumentValues.addIndexedArgumentValue(0, mapperClazz);
 //            beanDefinition.setConstructorArgumentValues(constructorArgumentValues);
-//            beanDefinition.getPropertyValues().add("sqlSessionFactory",
-//                    new RuntimeBeanReference("sqlSessionFactory"));
+//            beanDefinition.getPropertyValues().add("sqlSessionFactory", new RuntimeBeanReference("sqlSessionFactory"));
         }
 
         return beanDefinitionHolders;

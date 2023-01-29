@@ -1,6 +1,6 @@
-package org.dows.log.boot;
+package org.dows.log.config.mapper;
 
-import org.dows.log.LogConfig;
+import org.dows.log.config.LogConfig;
 import org.dows.log.api.BinlogListener;
 import org.dows.log.core.MysqlListener;
 import org.dows.log.core.thread.BinlogThreadStarter;

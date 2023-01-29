@@ -1,4 +1,4 @@
-package org.dows.log.boot;
+package org.dows.log.config.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.ibatis.session.SqlSessionFactory;

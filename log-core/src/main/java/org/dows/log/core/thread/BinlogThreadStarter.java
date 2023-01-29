@@ -1,6 +1,6 @@
 package org.dows.log.core.thread;
 
-import org.dows.log.LogProperties;
+import org.dows.log.config.LogProperties;
 import org.dows.log.core.BinlogDispatcher;
 import org.dows.log.core.ListenerContainer;
 import org.dows.log.core.MysqlListener;

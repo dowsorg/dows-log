@@ -1,4 +1,4 @@
-package org.dows.log.boot;
+package org.dows.log.config.mapper;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.ibatis.session.SqlSessionFactory;

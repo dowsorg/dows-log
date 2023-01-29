@@ -1,4 +1,4 @@
-package org.dows.log;
+package org.dows.log.api;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.StrUtil;
@@ -33,13 +33,13 @@ public class DomainContextHolder {
                     .build();
             DOMAIN_MAP.putIfAbsent(tableName, domainMeta);
         }
-
-
     }
 
     public static DomainMeta get(String domain) {
-
-
-        return null;
+        DomainMeta domainMeta = DOMAIN_MAP.get(domain);
+        if(domainMeta == null){
+            throw new RuntimeException("不存在该domain");
+        }
+        return domainMeta;
     }
 }

@@ -1,4 +1,4 @@
-package org.dows.log;
+package org.dows.log.config;
 
 import lombok.Data;
 

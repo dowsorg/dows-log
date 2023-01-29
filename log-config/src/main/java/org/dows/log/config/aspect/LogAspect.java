@@ -1,4 +1,4 @@
-package org.dows.log.boot.aspect;
+package org.dows.log.config.aspect;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.json.JSONUtil;
@@ -106,7 +106,7 @@ public class LogAspect {
         // 获取方法参数
         Map<String, String> methodParams = getMethodParams(joinPoint);
         // 组装对象
-        logService.insertByMap(requestParam);
+        //logService.insertByMap(requestParam);
         //logService.save(getUsername(), IpUtil.getBrowser(request), IpUtil.getIp(request), joinPoint, log);
     }
 

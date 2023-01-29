@@ -1,4 +1,4 @@
-package org.dows.log;
+package org.dows.log.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

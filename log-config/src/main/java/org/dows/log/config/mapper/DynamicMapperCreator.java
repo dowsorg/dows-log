@@ -1,4 +1,4 @@
-package org.dows.log.boot;
+package org.dows.log.config.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.Mapper;
 import org.objectweb.asm.ClassWriter;
