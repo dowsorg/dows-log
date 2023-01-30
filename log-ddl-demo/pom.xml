@@ -48,6 +48,10 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.dows.framework</groupId>
+            <artifactId>crud-mybatis</artifactId>
+        </dependency>
 
         <!--<dependency>-->
         <!--<groupId>cn.hutool</groupId>-->

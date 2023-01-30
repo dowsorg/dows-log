@@ -27,7 +27,7 @@ public class DomainScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
         }
         String[] basePackages = getPackagesToScan(attributes);
         scanner.registerFilters();
-        scanner.doScan(basePackages);
+        scanner.scan(basePackages);
     }
 
 

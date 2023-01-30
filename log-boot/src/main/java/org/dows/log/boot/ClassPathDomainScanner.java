@@ -1,6 +1,7 @@
 package org.dows.log.boot;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.SneakyThrows;
 import org.dows.log.api.DomainContextHolder;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -33,12 +34,14 @@ public class ClassPathDomainScanner extends ClassPathBeanDefinitionScanner {
         return false;
     }
 
+    @SneakyThrows
     @Override
     protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
         Set<BeanDefinitionHolder> beanDefinitionHolders = super.doScan(basePackages);
 
         for (BeanDefinitionHolder beanDefinitionHolder : beanDefinitionHolders) {
             ScannedGenericBeanDefinition beanDefinition = (ScannedGenericBeanDefinition) beanDefinitionHolder.getBeanDefinition();
+            beanDefinition.resolveBeanClass(classLoader);
             Class<?> beanClass = beanDefinition.getBeanClass();
             DomainContextHolder.put(beanClass);
             /**

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +17,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user_entity")
+@TableName("user_entity")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("user_entity")
 public class UserEntity {
 
     @Id

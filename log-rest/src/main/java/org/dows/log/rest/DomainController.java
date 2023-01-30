@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-public class LogController {
+public class DomainController {
 
     protected LogService service;
 
