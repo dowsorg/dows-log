@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.Set;
 
-public class PathInteceptor implements HandlerInterceptor {
+public class DomainPathInteceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof HandlerMethod) {
@@ -22,6 +22,8 @@ public class PathInteceptor implements HandlerInterceptor {
                         .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE)).keySet();
                 if (keys.contains("domain")) {
                     return true;
+                } else {
+                    throw new RuntimeException("不存在的路径");
                 }
                 /*for (MethodParameter mp : handlerMethod.getMethodParameters()) {
                     PathVariable parameterAnnotation = mp.getParameterAnnotation(PathVariable.class);
