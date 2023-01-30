@@ -1,4 +1,4 @@
-package org.dows.log.api;
+package org.dows.log.api.sql;
 
 import lombok.Data;
 

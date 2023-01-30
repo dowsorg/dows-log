@@ -12,8 +12,10 @@ import java.util.stream.Collectors;
 
 public class DomainContextHolder {
 
-    private static final Map<String, DomainMeta> DOMAIN_MAP = new HashMap<>();
+    private static final Map<String, DomainMetadata> DOMAIN_MAP = new HashMap<>();
 
+
+    private static final Map<Class<?>, DomainMetadata> DOMAIN_CLASS_MAP = new HashMap<>();
     /**
      * 初始化时扫描装入
      *
@@ -26,20 +28,32 @@ public class DomainContextHolder {
             List<String> collect = Arrays.stream(domainClass.getDeclaredFields())
                     .map(f -> StrUtil.toUnderlineCase(f.getName()))
                     .collect(Collectors.toList());
-            DomainMeta domainMeta = DomainMeta.builder()
+            DomainMetadata domainMetadata = DomainMetadata.builder()
                     .clazz(domainClass)
                     .tableName(tableName)
-                    .fields(collect)
+                    //.fields(collect)
                     .build();
-            DOMAIN_MAP.putIfAbsent(tableName, domainMeta);
+            for (String s : collect) {
+                domainMetadata.addFields(s);
+            }
+            DOMAIN_CLASS_MAP.putIfAbsent(domainClass,domainMetadata);
+            DOMAIN_MAP.putIfAbsent(tableName, domainMetadata);
         }
     }
 
-    public static DomainMeta get(String domain) {
-        DomainMeta domainMeta = DOMAIN_MAP.get(domain);
-        if(domainMeta == null){
+    public static DomainMetadata get(String domain) {
+        DomainMetadata domainMetadata = DOMAIN_MAP.get(domain);
+        if (domainMetadata == null) {
             throw new RuntimeException("不存在该domain");
         }
-        return domainMeta;
+        return domainMetadata;
+    }
+
+    public static DomainMetadata get(Class domainClass) {
+        DomainMetadata domainMetadata = DOMAIN_CLASS_MAP.get(domainClass);
+        if (domainMetadata == null) {
+            throw new RuntimeException("不存在该domain");
+        }
+        return domainMetadata;
     }
 }

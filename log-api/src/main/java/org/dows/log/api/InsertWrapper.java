@@ -1,4 +1,4 @@
-package org.dows.log;
+package org.dows.log.api;
 
 import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
@@ -8,22 +8,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class SaveWrapper<T> extends AbstractWrapper<T, String, SaveWrapper<T>> implements Save<SaveWrapper<T>, String> {
+public class InsertWrapper<T> extends AbstractWrapper<T, String, InsertWrapper<T>> implements Insert<InsertWrapper<T>, String> {
 
     private Map<String, String> sqlMap;
 
-    public SaveWrapper() {
+    public InsertWrapper() {
         this.sqlMap = new HashMap<>();
         super.initNeed();
     }
 
     @Override
-    protected SaveWrapper<T> instance() {
-        return new SaveWrapper();
+    protected InsertWrapper<T> instance() {
+        return new InsertWrapper();
     }
 
     @Override
-    public SaveWrapper<T> set(boolean condition, String column, Object val, String mapping) {
+    public InsertWrapper<T> set(boolean condition, String column, Object val, String mapping) {
         return this.maybeDo(condition, () -> {
             String sql = this.formatParam(mapping, val);
             this.sqlMap.put(column, sql);
@@ -31,7 +31,7 @@ public class SaveWrapper<T> extends AbstractWrapper<T, String, SaveWrapper<T>> i
     }
 
     @Override
-    public SaveWrapper<T> setMap(Map<String, String> map) {
+    public InsertWrapper<T> setMap(Map<String, String> map) {
         this.sqlMap = new HashMap<>();
         for (String key : map.keySet()) {
             String sql = this.formatParam(null, map.get(key));

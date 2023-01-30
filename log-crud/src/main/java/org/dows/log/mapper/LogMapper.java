@@ -5,13 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
-import org.dows.log.SaveWrapper;
+import org.dows.log.api.InsertWrapper;
 
 import java.util.List;
 
 public interface LogMapper extends BaseMapper<Object> {
     /**
      * 查询
+     * 成长   (增长)     分享(技术、生活)  协作(合作)      探索(方向，可能，尝试)
      *
      * @param id 主键
      * @return 测试
@@ -47,7 +48,7 @@ public interface LogMapper extends BaseMapper<Object> {
      * @return 结果
      */
     @Insert("insert into ${table} ${ew.getSql}")
-    int insert(@Param("table") String table, @Param("ew") SaveWrapper data);
+    int insert(@Param("table") String table, @Param("ew") InsertWrapper data);
 
     /**
      * 修改

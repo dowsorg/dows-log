@@ -1,9 +1,9 @@
-package org.dows.log;
+package org.dows.log.api;
 
 import java.io.Serializable;
 import java.util.Map;
 
-public interface Save<Children, R> extends Serializable {
+public interface Insert<Children, R> extends Serializable {
     default Children set(R column, Object val) {
         return this.set(true, column, val);
     }

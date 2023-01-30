@@ -1,5 +1,6 @@
 package org.dows.demo.entity.log;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 @Table(name = "user_entity_log")
 @Data
 @NoArgsConstructor
+@TableName("user_entity_log")
 @Binlog(hostName = "192.168.1.147", database = "log_ddl_demo", tableSchemaClass = UserEntity.class)
 public class UserEntityLog extends Model<UserEntityLog> {
 

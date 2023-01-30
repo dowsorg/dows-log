@@ -2,6 +2,7 @@ package org.dows.log.config.aspect;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.json.JSONUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,9 +11,11 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.dows.log.api.DomainContextHolder;
+import org.dows.log.api.DomainMetadata;
+import org.dows.log.api.InsertService;
 import org.dows.log.api.annotation.AuditLog;
 import org.dows.log.api.util.IpUtil;
-import org.dows.log.service.LogService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,23 +29,20 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.*;
 
+@RequiredArgsConstructor
 @Component
 @Aspect
 @Slf4j
 public class LogAspect {
 
-    private final LogService logService;
+    private final InsertService insertService;
 
     ThreadLocal<Long> currentTime = new ThreadLocal<>();
-
-    public LogAspect(LogService logService) {
-        this.logService = logService;
-    }
 
     /**
      * 配置切入点
      */
-    @Pointcut("@annotation(org.dows.log.api.annotation.Log)")
+    @Pointcut("@annotation(org.dows.log.api.annotation.AuditLog)")
     public void logPointcut() {
         // 该方法无方法体,主要为了让同类中其他方法使用此切入点
     }
@@ -104,9 +104,9 @@ public class LogAspect {
         // 获取请求参数
         Map<String, String> requestParam = getRequestParams(request);
         // 获取方法参数
-        Map<String, String> methodParams = getMethodParams(joinPoint);
+        DomainMetadata domainMetadata = getDomainMetadataByMethodAnnotation(joinPoint, requestParam);
         // 组装对象
-        //logService.insertByMap(requestParam);
+        insertService.insert(domainMetadata);
         //logService.save(getUsername(), IpUtil.getBrowser(request), IpUtil.getIp(request), joinPoint, log);
     }
 
@@ -174,11 +174,14 @@ public class LogAspect {
     }
 
 
-    private Map<String, String> getMethodParams(JoinPoint joinPoint) {
-        Map<String, String> params = new HashMap<>();
+    private DomainMetadata getDomainMetadataByMethodAnnotation(JoinPoint joinPoint, Map<String, String> params) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        AuditLog aopLog = method.getAnnotation(AuditLog.class);
+        AuditLog auditLog = method.getAnnotation(AuditLog.class);
+
+        Class aClass = auditLog.tableSchemaClass();
+        DomainMetadata domainMetadata = DomainContextHolder.get(aClass);
+
         // 方法路径
         String methodName = joinPoint.getTarget().getClass().getName() + "." + signature.getName() + "()";
         params.put("method_name", methodName);
@@ -192,8 +195,12 @@ public class LogAspect {
         // 参数
         params.put("method_params", stringBuilder + " }");
         // 描述
-        params.put("method_descr", aopLog.value());
-        return params;
+        params.put("method_descr", auditLog.value());
+        params.forEach((k, v) -> {
+            domainMetadata.setFieldValue(k, v);
+        });
+
+        return domainMetadata;
     }
 
 

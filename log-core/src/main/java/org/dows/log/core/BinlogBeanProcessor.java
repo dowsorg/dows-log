@@ -1,4 +1,4 @@
-package org.dows.log.config.mapper;
+package org.dows.log.core;
 
 import org.dows.log.config.LogConfig;
 import org.dows.log.api.BinlogListener;
@@ -27,11 +27,9 @@ public class BinlogBeanProcessor implements SmartInitializingSingleton {
     @Override
     public void afterSingletonsInstantiated() {
         Map<String, BinlogListener> beans = context.getBeansOfType(BinlogListener.class);
-
         Map<String, List<MysqlListener>> listeners = beans.values().stream()
                 .map(MysqlListener::new)
                 .collect(Collectors.groupingBy(MysqlListener::getHostName));
-
         listeners.forEach((k, v) -> new BinlogThreadStarter().runThread(logConfig.getByNameAndThrow(k), v));
     }
 }

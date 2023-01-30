@@ -1,4 +1,4 @@
-package org.dows.log.config.mapper;
+package org.dows.log.boot.mapper;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

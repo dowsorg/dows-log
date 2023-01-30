@@ -1,8 +1,6 @@
 package org.dows.log.rest;
 
 import org.dows.framework.api.Response;
-import org.dows.log.api.DomainContextHolder;
-import org.dows.log.api.DomainMeta;
 import org.dows.log.api.annotation.DomainMapping;
 import org.dows.log.service.LogService;
 import org.springframework.web.bind.annotation.*;

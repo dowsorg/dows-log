@@ -4,9 +4,10 @@ import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import lombok.RequiredArgsConstructor;
+import org.dows.log.api.InsertWrapper;
 import org.dows.log.api.DomainContextHolder;
-import org.dows.log.api.DomainMeta;
-import org.dows.log.SaveWrapper;
+import org.dows.log.api.DomainMetadata;
+import org.dows.log.api.InsertService;
 import org.dows.log.mapper.LogMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 @Service
 @RequiredArgsConstructor
-public class LogService {
+public class LogService implements InsertService {
 
     /**
      * 动态mapper
@@ -37,10 +38,10 @@ public class LogService {
 
     public void selectByIds(String domain, String ids) {
         // 获取domain对应的table
-        DomainMeta domainMeta = DomainContextHolder.get(domain);
+        DomainMetadata domainMetadata = DomainContextHolder.get(domain);
         if (ids.isBlank()) {
             String join = "`" + String.join("`,`", ids.split(",")) + "`";
-            logMapper.selectByIds(domainMeta.getTableName(), join);
+            logMapper.selectByIds(domainMetadata.getTableName(), join);
         }
     }
 
@@ -70,13 +71,18 @@ public class LogService {
         return selectList(table, queryWrapper);
     }
 
+    @Override
+    public void insert(DomainMetadata domainMetadata) {
+        logMapper.insert(domainMetadata.getTableName(),domainMetadata.insertWrapper());
+    }
+
     /**
      * 插入
      *
      * @param wrapper
      * @return
      */
-    public int insert(String table, SaveWrapper wrapper) {
+    public int insert(String table, InsertWrapper wrapper) {
         return logMapper.insert(table, wrapper);
     }
 
@@ -87,7 +93,7 @@ public class LogService {
      * @return
      */
     public int insertByMap(String table, Map<String, String> data) {
-        SaveWrapper wrapper = new SaveWrapper();
+        InsertWrapper wrapper = new InsertWrapper();
         wrapper.setMap(data);
 
         // 查询table 是否有通用字段
@@ -146,6 +152,7 @@ public class LogService {
     public int deleteById(String table, Integer id) {
         return logMapper.deleteById(table, id);
     }
+
 
 
 }

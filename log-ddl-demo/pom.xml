@@ -44,6 +44,10 @@
             <artifactId>log-api</artifactId>
             <version>20220701-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+        </dependency>
 
         <!--<dependency>-->
         <!--<groupId>cn.hutool</groupId>-->
