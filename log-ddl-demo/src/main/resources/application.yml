@@ -19,12 +19,12 @@ spring:
 log:
   binlog:
     hosts:
-      name: log_ddl_demo
-      host: 192.168.1.147
-      port: 3306
-      username: root
-      password: 123456
-      timeOffset: 1000
+      - name: log_ddl_demo
+        host: 192.168.1.147
+        port: 3306
+        username: root
+        password: 123456
+        timeOffset: 1000
     includs:
       tables:
         - name: user

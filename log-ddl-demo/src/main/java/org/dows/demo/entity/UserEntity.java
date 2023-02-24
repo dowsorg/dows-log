@@ -4,22 +4,23 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * @author: lujl
  * @Date: 2023\1\6 0006 16:21
  */
-@Entity
-@Table(name = "user_entity")
 @TableName("user_entity")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity {
+
+//    public static void main(String[] args) {
+//        final TableName annotation = UserEntity.class.getAnnotation(TableName.class);
+//    }
 
     @Id
     @Column(nullable = false, columnDefinition = "int(38) comment '主键id'")

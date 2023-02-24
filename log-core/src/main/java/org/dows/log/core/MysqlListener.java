@@ -1,10 +1,12 @@
 package org.dows.log.core;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import org.dows.log.api.BinlogListener;
 import org.dows.log.api.annotation.Binlog;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -26,12 +28,13 @@ public class MysqlListener {
         hostName = annotation.hostName();
         database = annotation.database();
         Class aClass = annotation.tableSchemaClass();
-//        try {
-//            aClass.getField("Table").getAnnotations();
-//            table = aClass.getAnnotation("c").toString();
-//        } catch (NoSuchFieldException e) {
-//            e.printStackTrace();
-//        }
+        Annotation declaredAnnotation = aClass.getAnnotation(TableName.class);
+        if (declaredAnnotation == null) {
+            throw new RuntimeException("未配置表异常");
+        }
+        TableName tableName = (TableName) declaredAnnotation;
+        table = tableName.value();
+
         entityClass = getGenericClass(targetClass);
     }
 

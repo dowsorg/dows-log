@@ -20,7 +20,7 @@ public class LogConfig {
     }
 
     public Optional<LogProperties> getByName(String name) {
-        return hosts.stream().filter(v -> name.equals(v.getName()))
+        return hosts.stream().filter(v -> name.equals(v.getHost()))
                 .findAny();
     }
 
