@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author: lujl
  * @Date: 2023\1\6 0006 15:59
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"org.dows.*"})
 @MapperScan(basePackages = {"org.dows.**.mapper"})
-@EnableDomainMapping(domainPackages = {"org.dows.demo.entity","org.dows.demo.listener"})
+@EnableDomainMapping(domainPackages = {"org.dows.demo.entity"})
 public class Application {
 
     public static void main(String[] args) {

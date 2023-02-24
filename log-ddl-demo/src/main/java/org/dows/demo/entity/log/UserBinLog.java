@@ -22,7 +22,6 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Binlog(hostName = "192.168.1.147", database = "log_ddl_demo", tableSchemaClass = UserEntity.class)
 public class UserBinLog {
 
     @Id

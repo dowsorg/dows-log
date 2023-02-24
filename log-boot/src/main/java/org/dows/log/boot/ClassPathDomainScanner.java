@@ -1,6 +1,5 @@
 package org.dows.log.boot;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.SneakyThrows;
 import org.dows.log.api.DomainContextHolder;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
@@ -9,6 +8,8 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.context.annotation.ScannedGenericBeanDefinition;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
+
+import javax.persistence.Table;
 import java.util.Set;
 
 public class ClassPathDomainScanner extends ClassPathBeanDefinitionScanner {
@@ -20,7 +21,7 @@ public class ClassPathDomainScanner extends ClassPathBeanDefinitionScanner {
     }
 
     public void registerFilters() {
-        AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(TableName.class);
+        AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(Table.class);
         this.addIncludeFilter(annotationTypeFilter);
 //        this.addIncludeFilter(new AnnotationTypeFilter(Component.class));
     }

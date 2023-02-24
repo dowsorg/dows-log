@@ -39,11 +39,11 @@
             <version>20220701-SNAPSHOT</version>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>org.dows.saas</groupId>
             <artifactId>log-api</artifactId>
             <version>20220701-SNAPSHOT</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>

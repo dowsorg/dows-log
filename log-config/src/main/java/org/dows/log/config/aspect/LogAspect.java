@@ -16,9 +16,9 @@ import org.dows.log.api.DomainMetadata;
 import org.dows.log.api.InsertService;
 import org.dows.log.api.annotation.AuditLog;
 import org.dows.log.api.util.IpUtil;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -111,22 +111,22 @@ public class LogAspect {
         //logService.save(getUsername(), IpUtil.getBrowser(request), IpUtil.getIp(request), joinPoint, log);
     }
 
-    public String getUsername() {
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication == null) {
-                //throw new BadRequestException(HttpStatus.UNAUTHORIZED, "当前登录状态过期");
-            }
-            if (authentication.getPrincipal() instanceof UserDetails) {
-                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                return userDetails.getUsername();
-            }
-        }catch (Exception e){
-            return "error";
-        }
-        //throw new AuthException(HttpStatus.UNAUTHORIZED, "找不到当前登录的信息");
-        return "";
-    }
+//    public String getUsername() {
+//        try {
+//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//            if (authentication == null) {
+//                //throw new BadRequestException(HttpStatus.UNAUTHORIZED, "当前登录状态过期");
+//            }
+//            if (authentication.getPrincipal() instanceof UserDetails) {
+//                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//                return userDetails.getUsername();
+//            }
+//        }catch (Exception e){
+//            return "error";
+//        }
+//        //throw new AuthException(HttpStatus.UNAUTHORIZED, "找不到当前登录的信息");
+//        return "";
+//    }
 
 
     private HttpServletRequest getHttpServletRequest() {
@@ -170,7 +170,7 @@ public class LogAspect {
             }
             params.putAll(JSONUtil.parseObj(paramJson).toBean(Map.class));
         }
-        params.put("account_name", getUsername());
+        //params.put("account_name", getUsername());
         params.put("browser", IpUtil.getBrowser(request));
         params.put("ip", IpUtil.getIp(request));
         // 设备指纹

@@ -5,9 +5,11 @@ import org.dows.demo.entity.log.UserBinLog;
 import org.dows.log.api.BinlogListener;
 import org.dows.log.api.DomainContextHolder;
 import org.dows.log.api.DomainMetadata;
+import org.dows.log.api.annotation.Binlog;
 import org.dows.log.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,11 +20,12 @@ import java.util.stream.Collectors;
  * @author Administrator
  * @date 2023/2/23 17:01
  */
-@Component
+@Binlog(hostName = "192.168.1.147", database = "log_ddl_demo", tableSchemaClass = UserEntity.class)
 public class UserTableBinlogListener implements BinlogListener<UserEntity> {
 
     @Autowired
     LogService logService;
+
     @Override
     public void onUpdate(UserEntity from, UserEntity to) {
         final DomainMetadata domainMetadata = DomainContextHolder.get(UserBinLog.class);
