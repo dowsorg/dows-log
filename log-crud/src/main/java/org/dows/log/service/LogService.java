@@ -4,14 +4,12 @@ import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import lombok.RequiredArgsConstructor;
-import org.dows.framework.crud.mybatis.CrudEntity;
-import org.dows.log.api.InsertWrapper;
 import org.dows.log.api.DomainContextHolder;
 import org.dows.log.api.DomainMetadata;
 import org.dows.log.api.InsertService;
+import org.dows.log.api.InsertWrapper;
 import org.dows.log.mapper.LogMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +31,7 @@ public class LogService implements InsertService {
      * @param id
      * @return
      */
-    public Object selectById(Class<? extends CrudEntity> entity, Long id) {
+    public Object selectById(String entity, Long id) {
         DomainMetadata domainMetadata = DomainContextHolder.get(entity);
 
         return logMapper.selectById(domainMetadata.getTableName(), id);

@@ -1,18 +1,14 @@
 package org.dows.demo.controller;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import org.dows.demo.entity.log.UserEntityLog;
 import org.dows.demo.request.AddRequest;
 import org.dows.demo.service.UserServiceImpl;
-import org.dows.log.api.annotation.AuditLog;
-import org.dows.log.api.annotation.type.LogActionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +28,6 @@ public class TestController {
         return new ResponseEntity<>(Collections.EMPTY_MAP, HttpStatus.OK);
     }
 
-    @AuditLog(type = LogActionType.DELETE, tableSchemaClass = UserEntityLog.class)
     @PostMapping(value = "/testAuditLogDelete")
     public ResponseEntity<Object> testAuditLogDelete(@RequestBody AddRequest addRequest) {
         Map<String, String> result = new HashMap<>(1);
@@ -40,7 +35,6 @@ public class TestController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @AuditLog(type = LogActionType.SELECT, tableSchemaClass = UserEntityLog.class)
     @PostMapping(value = "/testAuditLogSelect")
     public ResponseEntity<Object> testAuditLogSelect(@RequestBody AddRequest addRequest) {
         Map<String, String> result = new HashMap<>(1);

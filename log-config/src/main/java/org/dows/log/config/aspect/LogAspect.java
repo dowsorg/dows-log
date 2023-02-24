@@ -56,8 +56,9 @@ public class LogAspect {
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         currentTime.set(System.currentTimeMillis());
         Object result = joinPoint.proceed();
+        final Long aLong = currentTime.get();
         currentTime.remove();
-        saveLog(joinPoint, "INFO", System.currentTimeMillis() - currentTime.get(), "NULL");
+        saveLog(joinPoint, "INFO", System.currentTimeMillis() - aLong, "NULL");
         return result;
     }
 
@@ -111,13 +112,17 @@ public class LogAspect {
     }
 
     public String getUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
-            //throw new BadRequestException(HttpStatus.UNAUTHORIZED, "当前登录状态过期");
-        }
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return userDetails.getUsername();
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null) {
+                //throw new BadRequestException(HttpStatus.UNAUTHORIZED, "当前登录状态过期");
+            }
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                return userDetails.getUsername();
+            }
+        }catch (Exception e){
+            return "error";
         }
         //throw new AuthException(HttpStatus.UNAUTHORIZED, "找不到当前登录的信息");
         return "";

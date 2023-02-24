@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 import org.dows.log.api.InsertWrapper;
-
 import java.util.List;
 
+@Mapper
 public interface LogMapper extends BaseMapper<Object> {
     /**
      * 查询

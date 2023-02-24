@@ -25,6 +25,24 @@ log:
       username: root
       password: 123456
       timeOffset: 1000
+    includs:
+      tables:
+        - name: user
+          fileds:
+            - ddd
+            - ccc
+        - name: account
+          fields:
+            - eee
+            - fff
+            - rrr
+
+  filelog:
+    filter:
+
+
+  auditlog:
+
 
 #mybatis-plus:
 #  scanner:

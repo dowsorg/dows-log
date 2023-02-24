@@ -9,7 +9,6 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.context.annotation.ScannedGenericBeanDefinition;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
-
 import java.util.Set;
 
 public class ClassPathDomainScanner extends ClassPathBeanDefinitionScanner {
@@ -23,6 +22,7 @@ public class ClassPathDomainScanner extends ClassPathBeanDefinitionScanner {
     public void registerFilters() {
         AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(TableName.class);
         this.addIncludeFilter(annotationTypeFilter);
+//        this.addIncludeFilter(new AnnotationTypeFilter(Component.class));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.dows.demo;
+package org.dows.log.config;
 
 import org.apache.commons.compress.utils.IOUtils;
 

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.demo.entity.UserEntity;
-import org.dows.demo.entity.log.UserEntityLog;
+import org.dows.demo.entity.log.UserAuditLog;
 import org.dows.demo.mapper.UserEntityMapper;
 import org.dows.framework.crud.mybatis.MybatisCrudServiceImpl;
 import org.dows.log.api.annotation.AuditLog;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Slf4j
@@ -25,13 +26,22 @@ public class UserServiceImpl extends MybatisCrudServiceImpl<UserEntityMapper, Us
     @Autowired
     private UserEntityMapper userEntityMapper;
 
-    @AuditLog(type = LogActionType.ADD, tableSchemaClass = UserEntityLog.class)
+    @AuditLog(type = LogActionType.ADD, tableSchemaClass = UserAuditLog.class)
     @Override
     public void insert(String str1, String str2) {
-        userEntityMapper.insert(new UserEntity(11111, "dd"));
+        final UserEntity userEntity = new UserEntity();
+        userEntity.setUserName("1111");
+        userEntityMapper.insert(userEntity);
     }
 
-    @AuditLog(type = LogActionType.DELETE, tableSchemaClass = UserEntityLog.class)
+
+//    @AuditLog(type = LogActionType.ADD, tableSchemaClass = UserAuditLog1.class)
+//    public void insert2(String str1, String str2) {
+//        final UserEntity userEntity = new UserEntity();
+//        userEntity.setUserName("1111");
+//        userEntityMapper.insert(userEntity);
+//    }
+
     @Override
     public void delete(Integer id) {
         userEntityMapper.deleteById(id);
