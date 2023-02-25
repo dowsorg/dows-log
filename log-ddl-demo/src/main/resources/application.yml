@@ -25,17 +25,12 @@ log:
         username: root
         password: 123456
         timeOffset: 1000
-    includs:
-      tables:
-        - name: user
-          fileds:
-            - ddd
-            - ccc
-        - name: account
-          fields:
-            - eee
-            - fff
-            - rrr
+        # 全部填 *，指定某个数据库所有表填写 db_name.*
+        includes:
+          - dows.log_ddl_demo
+        # 不做排除 填写空 "" ,excludes 规则优先级高于 includes
+        #excludes:
+        # - dows.
 
   filelog:
     filter:

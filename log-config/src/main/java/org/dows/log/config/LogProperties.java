@@ -13,4 +13,6 @@ public class LogProperties {
     private String password;
     private long timeOffset;
     private List<String> entityPackages;
+
+    private TableFilter tableFilter;
 }

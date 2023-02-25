@@ -1,5 +1,6 @@
 package org.dows.demo.listener;
 
+import cn.hutool.core.util.StrUtil;
 import org.dows.demo.entity.UserEntity;
 import org.dows.demo.entity.log.UserBinLog;
 import org.dows.log.api.BinlogListener;
@@ -10,9 +11,10 @@ import org.dows.log.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -31,10 +33,11 @@ public class UserTableBinlogListener implements BinlogListener<UserEntity> {
         final List<String> fields = domainMetadata.getFields();
         final List<Field> collect1 = Arrays.stream(UserEntity.class.getDeclaredFields())/*.map(f -> f.getName())*/
                 .collect(Collectors.toList());
-        List<Field> mappingFields = new ArrayList<>();
+
+        Set<Field> mappingFields = new HashSet<>();
         for (String field : fields) {
             for (Field s : collect1) {
-                if (field.equals(s)) {
+                if (field.contains(StrUtil.toUnderlineCase(s.getName()))) {
                     mappingFields.add(s);
                 }
             }
@@ -42,21 +45,16 @@ public class UserTableBinlogListener implements BinlogListener<UserEntity> {
         mappingFields.forEach(f -> {
             f.setAccessible(true);
             try {
-                if (f.getName().contains("From")) {
-                    // 变化前的值
-                    final Object o = f.get(from);
-                    domainMetadata.setFieldValue(f.getName() + "Form", o);
-                }
-                if (f.getName().contains("To")) {
-                    // 变化后的值
-                    final Object o1 = f.get(to);
-                    domainMetadata.setFieldValue(f.getName() + "To", o1);
-                }
+                String sf = StrUtil.toUnderlineCase(f.getName());
+                // 变化前的值
+                domainMetadata.setFieldValue(sf + "_form", f.get(from));
+                // 变化后的值
+                domainMetadata.setFieldValue(sf + "_to", f.get(to));
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-            logService.insert(domainMetadata);
         });
+        logService.insert(domainMetadata);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class MysqlListener {
         Class<?> targetClass = AopUtils.getTargetClass(listener);
         Binlog annotation = AnnotationUtils.findAnnotation(targetClass, Binlog.class);
         if (annotation == null)
-            throw new RuntimeException("Mysql binlog listener必须添加 MysqlWatcher 注解");
+            throw new RuntimeException("Mysql binlog listener必须添加 MysqlWatcher @Binlog 注解");
 
         hostName = annotation.hostName();
         database = annotation.database();

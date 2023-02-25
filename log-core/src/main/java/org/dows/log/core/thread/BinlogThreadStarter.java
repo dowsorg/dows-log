@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class BinlogThreadStarter {
     static {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -66,7 +66,7 @@ public class BinlogThreadStarter {
                     .map(l -> new ListenerContainer(l.getEntityClass(), l.getListener(), columns, logProperties.getTimeOffset()))
                     .collect(Collectors.toList());
 
-            logListener.addListener(arr[0], arr[1], containers);
+            logListener.addListener(arr[0], arr[1], containers,logProperties.getTableFilter());
         });
 
         new Thread(new BinlogListenerThread(logProperties, logListener)).start();

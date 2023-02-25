@@ -27,12 +27,10 @@ public class BinlogListenerThread implements Runnable {
 
         client.registerEventListener(listener);
 
-        while (true) {
-            try {
-                client.connect();
-            } catch (IOException e) {
-                logger.error("{}:{}监听器错误", logProperties.getHost(), logProperties.getPort(), e);
-            }
+        try {
+            client.connect();
+        } catch (IOException e) {
+            logger.error("{}:{}监听器错误", logProperties.getHost(), logProperties.getPort(), e);
         }
     }
 }

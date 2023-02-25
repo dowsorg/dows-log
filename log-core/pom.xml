@@ -26,17 +26,13 @@
             <artifactId>crud-mybatis</artifactId>
             <version>20220701-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.shyiko</groupId>
-            <artifactId>mysql-binlog-connector-java</artifactId>
-            <version>0.21.0</version>
-        </dependency>
 
         <dependency>
             <groupId>com.zendesk</groupId>
             <artifactId>mysql-binlog-connector-java</artifactId>
-            <version>0.27.5</version>
+            <version>0.28.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
