@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.dows.log.config.TableFilter;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class BinlogDispatcher implements BinaryLogClient.EventListener {
         if (eventType == EventType.TABLE_MAP) {
             MysqlTable table = new MysqlTable(event.getData());
             String key = table.getDatabase() + "." + table.getTable();
-            if(!filterData(key)){
+            if (!filterData(key)) {
                 return;
             }
             if (this.listenerMap.containsKey(key)) {
@@ -88,23 +87,30 @@ public class BinlogDispatcher implements BinaryLogClient.EventListener {
 
     /**
      * 过滤表
+     *
      * @param tableName
      * @return
      */
     private boolean filterData(String tableName) {
-        log.info("filterData current tableName : {}", tableName);
+        log.info("filter current tableName : {}", tableName);
         if (tableName == null) {
             return false;
         }
         String database = tableName.split(",")[0];
         String allTable = database + ".*";
-        List includes = Arrays.asList(tableFilter.getIncludes().split(","));
-        List excludes = Arrays.asList(tableFilter.getExcludes().split(","));
+        List includes = tableFilter.getIncludes();
+        List excludes = tableFilter.getExcludes();
+        if (excludes.size() == 0) {
+            return true;
+        }
         if (excludes.contains(allTable)) {
             return false;
         }
         if (excludes.contains(tableName)) {
             return false;
+        }
+        if (includes.size() == 0) {
+            return true;
         }
         if (includes.contains(allTable)) {
             return true;

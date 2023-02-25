@@ -2,8 +2,11 @@ package org.dows.log.config;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class TableFilter {
-    private String includes;
-    private String excludes;
+    private List<String> includes = new ArrayList<>();
+    private List<String> excludes = new ArrayList<>();
 }

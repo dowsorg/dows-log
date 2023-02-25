@@ -66,7 +66,7 @@ public class BinlogThreadStarter {
                     .map(l -> new ListenerContainer(l.getEntityClass(), l.getListener(), columns, logProperties.getTimeOffset()))
                     .collect(Collectors.toList());
 
-            logListener.addListener(arr[0], arr[1], containers,logProperties.getTableFilter());
+            logListener.addListener(arr[0], arr[1], containers,logProperties.getFilter());
         });
 
         new Thread(new BinlogListenerThread(logProperties, logListener)).start();

@@ -1,6 +1,7 @@
 package org.dows.log.config;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ public class LogProperties {
     private String password;
     private long timeOffset;
     private List<String> entityPackages;
-
-    private TableFilter tableFilter;
+    @NestedConfigurationProperty
+    private TableFilter filter;
 }
