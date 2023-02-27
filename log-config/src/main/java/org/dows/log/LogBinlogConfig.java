@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Configuration
 @ConfigurationProperties(prefix = "log.binlog")
-public class LogConfig {
+public class LogBinlogConfig {
     private List<LogProperties> hosts;
 
     public List<LogProperties> getHosts() {
@@ -20,7 +20,7 @@ public class LogConfig {
     }
 
     public Optional<LogProperties> getByName(String name) {
-        return hosts.stream().filter(v -> name.equals(v.getName()))
+        return hosts.stream().filter(v -> name.equals(v.getHost()))
                 .findAny();
     }
 

@@ -10,5 +10,6 @@ import java.lang.annotation.*;
 public @interface Binlog {
     String hostName();
     String database();
+    String table();
     Class tableSchemaClass();
 }

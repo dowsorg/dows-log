@@ -25,6 +25,7 @@ public class MysqlListener {
 
         hostName = annotation.hostName();
         database = annotation.database();
+        table = annotation.table();
         Class aClass = annotation.tableSchemaClass();
 //        try {
 //            aClass.getField("Table").getAnnotations();

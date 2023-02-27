@@ -20,7 +20,7 @@
         <module>log-config</module>
         <module>log-core</module>
         <module>log-app</module>
-        <module>log-ddl-demo</module>
+<!--        <module>log-ddl-demo</module>-->
     </modules>
 
 </project>

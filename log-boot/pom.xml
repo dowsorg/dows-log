@@ -14,7 +14,7 @@
 
         <dependency>
             <groupId>org.dows.saas</groupId>
-            <artifactId>log-rest</artifactId>
+            <artifactId>log-api</artifactId>
             <version>20220701-SNAPSHOT</version>
         </dependency>
         <dependency>

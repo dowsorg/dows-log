@@ -1,6 +1,6 @@
 package org.dows.log.boot;
 
-import org.dows.log.LogConfig;
+import org.dows.log.LogBinlogConfig;
 import org.dows.log.api.BinlogListener;
 import org.dows.log.core.MysqlListener;
 import org.dows.log.core.thread.BinlogThreadStarter;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class BinlogBeanProcessor implements SmartInitializingSingleton {
     private ApplicationContext context;
     @Autowired
-    private LogConfig logConfig;
+    private LogBinlogConfig logBinlogConfig;
 
     public BinlogBeanProcessor(ApplicationContext context) {
         this.context = context;
@@ -32,6 +32,6 @@ public class BinlogBeanProcessor implements SmartInitializingSingleton {
                 .map(MysqlListener::new)
                 .collect(Collectors.groupingBy(MysqlListener::getHostName));
 
-        listeners.forEach((k, v) -> new BinlogThreadStarter().runThread(logConfig.getByNameAndThrow(k), v));
+        listeners.forEach((k, v) -> new BinlogThreadStarter().runThread(logBinlogConfig.getByNameAndThrow(k), v));
     }
 }
